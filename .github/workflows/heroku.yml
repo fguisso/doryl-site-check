@@ -18,3 +18,5 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           branch: "main"
           usedocker: true
+        env:
+          INTERNAL_PORT: 3000

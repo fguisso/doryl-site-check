@@ -41,7 +41,7 @@ func internalDocs() {
 
 	fmt.Println("starting internal docs in localhost:80")
 
-	err := http.ListenAndServe(":80", mux)
+	err := http.ListenAndServe(":"+os.Getenv("INTERNAL_PORT"), mux)
 	log.Fatal(err)
 }
 
