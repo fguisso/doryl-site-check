@@ -17,3 +17,4 @@ jobs:
           heroku_app_name: "doryl-site-check"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           remote_branch: "main"
+          usedocker: true
