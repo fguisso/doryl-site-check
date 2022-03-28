@@ -46,10 +46,13 @@ func SiteCheckPage(c echo.Context) error {
 func lookupIPDomain(target string) (string, string) {
 	domain, err := url.Parse(target)
 	if err != nil {
-		fmt.Println("URL error:", err)
+		fmt.Println("URL parser error:", err)
 	}
 
 	iprecords, err := net.LookupIP(domain.Hostname())
+	if err != nil {
+		fmt.Println("LookupIP error:", err)
+	}
 
 	var ips string
 	for i, ip := range iprecords {
@@ -94,6 +97,7 @@ func httpGet(url string) (map[string]string, missingSecurityHeaders, string) {
 	res, err := http.Get(url)
 	if err != nil {
 		fmt.Println("HTTP: HTTP GET request error:", err)
+		return nil, missingSecurityHeaders{}, ""
 	}
 	defer res.Body.Close()
 

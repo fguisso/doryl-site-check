@@ -39,9 +39,9 @@ func internalDocs() {
 	fs := http.FileServer(http.Dir("./admin"))
 	mux.Handle("/", http.StripPrefix("/", fs))
 
-	fmt.Println("starting internal docs in localhost:" + os.Getenv("INTERNAL_PORT"))
+	fmt.Println("starting internal docs in 127.0.0.1:" + os.Getenv("INTERNAL_PORT"))
 
-	err := http.ListenAndServe(":"+os.Getenv("INTERNAL_PORT"), mux)
+	err := http.ListenAndServe("127.0.0.1:"+os.Getenv("INTERNAL_PORT"), mux)
 	log.Fatal(err)
 }
 
