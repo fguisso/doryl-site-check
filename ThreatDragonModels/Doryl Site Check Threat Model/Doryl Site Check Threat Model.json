@@ -1,0 +1,16 @@
+{
+  "version": "2.0.9",
+  "summary": {
+    "title": "Doryl Site Check Threat Model",
+    "owner": "guisso",
+    "description": "This is a web application that returns and verify security headers.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [],
+    "diagramTop": 0,
+    "reviewer": "",
+    "threatTop": 0
+  }
+}
