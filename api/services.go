@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"io"
+	"os"
 	"net"
 	"net/http"
 	"net/url"
@@ -27,10 +28,7 @@ func Index(c echo.Context) error {
 // SiteCheckPage renders page with results about headers check.
 func SiteCheckPage(c echo.Context) error {
 	target := c.FormValue("target")
-	if !strings.Contains(target, "http") {
-		target = "http://" + target
-	}
-
+	
 	domain, ips := lookupIPDomain(target)
 	headers, missing, body := httpGet(target)
 	return c.Render(http.StatusOK, "check.html", map[string]interface{}{
@@ -96,6 +94,16 @@ func httpGet(url string) (map[string]string, missingSecurityHeaders, string) {
 
 	res, err := http.Get(url)
 	if err != nil {
+		if strings.HasPrefix(url, "file://") {
+			filePath := strings.TrimPrefix(url, "file://")
+			fileContent, err := os.ReadFile(filePath)
+			if err != nil {
+				fmt.Println("File read error:", err)
+				return nil, missingSecurityHeaders{}, ""
+			}
+			fmt.Println("File content read successfully.")
+			return nil, missingSecurityHeaders{}, string(fileContent)
+		}
 		fmt.Println("HTTP: HTTP GET request error:", err)
 		return nil, missingSecurityHeaders{}, ""
 	}
